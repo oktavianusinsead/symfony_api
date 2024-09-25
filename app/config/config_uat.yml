@@ -1,0 +1,5 @@
+imports:
+    - { resource: config.yml }
+    - { resource: parameters_uat.yml }
+    - { resource: properties.php }
+    - { resource: security.php }

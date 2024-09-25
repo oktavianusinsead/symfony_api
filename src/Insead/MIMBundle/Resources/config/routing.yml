@@ -1,0 +1,13 @@
+# Insead\MIMBundle\resources\config\routing.yml
+
+# Main Endpoints
+main:
+    resource: "@MIMBundle/Resources/config/routing_main.yml"
+
+# Options Endpoints
+options:
+    resource: "@MIMBundle/Resources/config/routing_options.yml"
+
+# CRON Endpoints
+cron:
+    resource: "@MIMBundle/Resources/config/routing_cron.yml"

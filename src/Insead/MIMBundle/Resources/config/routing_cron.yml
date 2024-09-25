@@ -1,0 +1,25 @@
+# Insead\MIMBundle\resources\config\routing_cron.yml
+
+coursebackup:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\Cron\CronCourseBackupController
+
+pending-attachment:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\Cron\CronPendingAttachmentController
+
+cron-huddle-user:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\Cron\CronHuddleUserController
+
+archive-user-token:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\Cron\CronArchiveUserTokenController
+
+cron-vanilla-programme-user:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\Cron\CronVanillaController
+
+cron-user-profile:
+    type:          annotation
+    resource:      Insead\MIMBundle\Controller\Cron\CronUserProfileController

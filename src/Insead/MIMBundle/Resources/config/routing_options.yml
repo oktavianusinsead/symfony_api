@@ -1,0 +1,7 @@
+# Insead\MIMBundle\resources\config\routing_options.yml
+
+option-controllers:
+  type:        attribute
+  resource:
+      path: ../../Controller/Options/
+      namespace: Insead\MIMBundle\Controller\Options

@@ -1,0 +1,751 @@
+parameters:
+    service.oauth_client:           Insead\MIMBundle\Service\Oauth\OauthClient
+    daterange.validator.class:      Insead\MIMBundle\Validator\Constraints\DateRangeValidator
+
+    authentication.service.oauth_client.config:
+        url:    "%oauth_server_url%"
+        auth_header: "%oauth_header_param%"
+
+    study.notify.config:
+        symfony_environment: "%symfony_environment%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        aws_sns_platform_app_arn: "%aws_sns_platform_app_arn%"
+        kernel_environment: "%kernel.environment%"
+
+    study.backup.config:
+        symfony_environment: "%symfony_environment%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        aws_ses_cc_email: "%aws_ses_cc_email%"
+        aws_ses_from_email: "%aws_ses_from_email%"
+        aws_ses_review_cc_email: "%aws_ses_review_cc_email%"
+        aws_s3_bucket: "%aws_s3_bucket%"
+        backup_url: "%backup_url%"
+        backup_keypair_id: "%backup_keypair_id%"
+        study_weburl: "%study_weburl%"
+        upload_temp_folder: "%upload_temp_folder%"
+        kernel_root: "%kernel.project_dir%"
+
+    study.s3.config:
+        symfony_environment: "%symfony_environment%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        backup_url: "%backup_url%"
+        backup_keypair_id: "%backup_keypair_id%"
+        study_resource_bucket: "%study_resource_bucket%"
+        cdn_bucket: "%cdn_bucket%"
+        aws_s3_bucket: "%aws_s3_bucket%"
+        upload_temp_folder: "%upload_temp_folder%"
+        kernel_root: "%kernel.project_dir%"
+
+    study.extract.config:
+        embedly_api_key:    "%embedly_api_key%"
+
+    box.config:
+        symfony_environment: "%symfony_environment%"
+        box_client_id: "%box_client_id%"
+        box_client_secret: "%box_client_secret%"
+        box_enterprise_id: "%box_enterprise_id%"
+        box_master_id: "%box_master_id%"
+        box_cert_pass: "%box_cert_pass%"
+        box_cert_id: "%box_cert_id%"
+        box_base_url: "%box_base_url%"
+        box_upload_url: "%box_upload_url%"
+        box_upload_path: "%box_upload_path%"
+        box_api_url: "%box_api_url%"
+
+    box.path.config:
+        upload_temp_folder: "%upload_temp_folder%"
+        kernel_root: "%kernel.project_dir%"
+
+    adws.config:
+        adws_url: "%adws_url%"
+        adws_username: "%adws_username%"
+        adws_password: "%adws_password%"
+
+    redis.config:
+        symfony_environment: "%symfony_environment%"
+        redis_host: "%redis_host%"
+        redis_port: "%redis_port%"
+
+    profilebook.config:
+        secret: "%secret%"
+        aip_config: "%aip.config%"
+
+    acl.config:
+        symfony_environment: "%symfony_environment%"
+        study_super: "%study_super%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        aws_ses_from_email: "%aws_ses_from_email%"
+        aws_ses_review_cc_email: "%aws_ses_review_cc_email%"
+
+    vanilla.config:
+        symfony_environment: "%symfony_environment%"
+        vanilla_base_url: "%vanilla_base_url%"
+        vanilla_api_url: "%vanilla_api_url%"
+        vanilla_master_token: "%vanilla_master_token%"
+        vanilla_conversation_limit: "%vanilla_conversation_limit%"
+        vanilla_category: "%vanilla_category%"
+
+    userprofile.config:
+      secret: "%secret%"
+      symfony_environment: "%symfony_environment%"
+      aws_access_key_id: "%aws_access_key_id%"
+      aws_secret_key: "%aws_secret_key%"
+      aws_region: "%aws_region%"
+      aws_ses_cc_email: "%aws_ses_cc_email%"
+      aws_ses_from_email: "%aws_ses_from_email%"
+      aws_ses_review_cc_email: "%aws_ses_review_cc_email%"
+      aws_s3_bucket: "%aws_s3_bucket%"
+      kernel_root: "%kernel.project_dir%"
+      upload_temp_folder: "%upload_temp_folder%"
+      aip_config: "%aip.config%"
+
+    course_people.config:
+      aip_config: "%aip.config%"
+
+    aip.config:
+      aip_enabled: "%aip_enabled%"
+      aip_base_url: "%aip_base_url%"
+      aip_client_id: "%aip_client_id%"
+      aip_client_secret: "%aip_client_secret%"
+      aip_person_enabled: "%aip_person_enabled%"
+      aip_person_base_url: "%aip_person_base_url%"
+      aip_person_client_id: "%aip_person_client_id%"
+      aip_person_client_secret: "%aip_person_client_secret%"
+      aip_person_keys: "%aip_person_keys%"
+    
+    utility.config:
+      upload_temp_folder: "%upload_temp_folder%"
+      kernel_root: "%kernel.project_dir%"
+      study_api_id: "%study_api_id%"
+      study_api_secret: "%study_api_secret%"
+
+    barco.config:
+      barco_weconnect_api_key: "%barco_weconnect_api_key%"
+      barco_weconnect_api_url: "%barco_weconnect_api_url%"
+      symfony_environment: "%symfony_environment%"
+
+services:
+    _defaults:
+      autowire: true
+      autoconfigure: true
+      public: false
+      bind:
+          $secret: "%secret%"
+
+    Insead\MIMBundle\:
+        resource: '../../../MIMBundle'
+        exclude:
+            - '../../../MIMBundle/{DependencyInjection,Tests,Entity}'
+
+    Insead\MIMLoggingBundle\:
+        resource: '../../../MIMLoggingBundle'
+        exclude:
+            - '../../../MIMLoggingBundle/DependencyInjection'
+
+    Insead\MIMSeedFixturesBundle\:
+        resource: '../../../MIMSeedFixturesBundle'
+        exclude:
+            - '../../../MIMSeedFixturesBundle/DependencyInjection'
+
+    InseadSSOBundle\:
+        resource: '../../../../InseadSSOBundle'
+
+    Doctrine\ORM\EntityManager:
+        alias: doctrine.orm.default_entity_manager
+        public: false
+
+    serializer:
+      alias: 'jms_serializer.serializer'
+      public: true
+
+    lightsaml_service_binding_factory:
+      class: LightSaml\Binding\BindingFactoryInterface
+      public: true
+
+    lightsaml_container_build:
+      class: LightSaml\SymfonyBridgeBundle\Bridge\Container\BuildContainer
+      public: true
+
+    app.security_listener:
+        class: Insead\MIMBundle\Listener\SecurityListener
+        public: true
+        arguments:
+            $logger: "@logger"
+
+    kernel.listener.insead_mimbundle_exception_listener:
+      class: Insead\MIMBundle\Listener\ExceptionListener
+      public: true
+      arguments: ["@logger", "@twig"]
+      tags:
+          - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    app.cors_listener:
+        class: Insead\MIMBundle\Listener\CorsListener
+        public: true
+        arguments:
+            $logger: "@logger"
+
+    app.xraylog_listener:
+        class: Insead\MIMBundle\Listener\XrayLogListener
+        public: true
+        arguments:
+            $logger: "@logger"
+        tags:
+            - { name: monolog.logger, channel: xray }
+
+    app.token_listener:
+        class: Insead\MIMBundle\Listener\AuthTokenListener
+        arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@security.authorization_checker", "@logger", "@redis.authtoken", "%secret%"]
+
+
+    app.scope_listener:
+        class: Insead\MIMBundle\Listener\ScopeListener
+        public: true
+        arguments: ["@logger", "@annotation_reader"]
+
+    app.maintenance_listener:
+        class: Insead\MIMBundle\Listener\MaintenanceListener
+        public: true
+        arguments: ["@manager.maintenance", "@request_stack"]
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+
+    authentication.oauth_client:
+        class: "%service.oauth_client%"
+        public: true
+        arguments: ["%authentication.service.oauth_client.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: oauth_client }
+
+    study_notify:
+        class: Insead\MIMBundle\Service\StudyNotify
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: notify }
+
+    study_backup:
+        class: Insead\MIMBundle\Service\StudyCourseBackup
+        public: true
+        arguments: ["@doctrine.orm.entity_manager", "@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    study_extract:
+        class: Insead\MIMBundle\Service\StudyExtract
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+
+    daterange.validator:
+        class: "%daterange.validator.class%"
+        arguments:
+            $logger: "@logger"
+        tags:
+            - { name: validator.constraint_validator, alias: daterange_validator }
+
+    study_s3:
+        class: Insead\MIMBundle\Service\S3ObjectManager
+        arguments: ["%study.s3.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: s3 }
+
+    aip_service:
+        class: Insead\MIMBundle\Service\AIPService
+        public: true
+        arguments: ["@logger", "%aip.config%", "@rest_http_service"]
+
+    rest_http_service:
+      class: Insead\MIMBundle\Service\RestHTTPService
+      public: true
+      arguments: ["@logger"]
+
+    #Managers
+    manager.abstractBase:
+        class: Insead\MIMBundle\Service\Manager\AbstractBase
+        public: false
+        abstract: true
+        arguments: [ "@redis.main", "@logger", "@study_notify", "@doctrine.orm.entity_manager", "@validator", "@jms_serializer.serializer", "@study_backup" ]
+        calls:
+            - [ setLogUuIdFromService,[ "@request_stack" ] ]
+            - [ setUserProfile,[ "@manager.userprofile" ] ]
+            - [ setEnvironment,[ "%kernel.environment%" ] ]
+
+    manager.base:
+        class: Insead\MIMBundle\Service\Manager\Base
+        public: true
+        arguments: [ "@redis.main", "@logger", "@study_notify", "@doctrine.orm.entity_manager", "@validator", "@jms_serializer.serializer", "@study_backup" ]
+        calls:
+            - [ setLogUuIdFromService,[ "@request_stack" ] ]
+
+    manager.croncoursebackup:
+        class: Insead\MIMBundle\Service\Manager\CronCourseBackupManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.backup.config%", "@file.filemanager"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.cronpendingattachment:
+        class: Insead\MIMBundle\Service\Manager\CronPendingAttachmentManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.backup.config%"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.cronarchiveusertoken:
+        class: Insead\MIMBundle\Service\Manager\CronArchiveUserTokenManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.coursebackup:
+        class: Insead\MIMBundle\Service\Manager\CourseBackupManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@redis.main"]]
+
+    manager.login:
+        class: Insead\MIMBundle\Service\Manager\LoginManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@redis.authtoken", "%acl.config%"]]
+
+    manager.programme:
+        class: Insead\MIMBundle\Service\Manager\ProgrammeManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "@manager.login", "%acl.config%"]]
+
+    manager.course:
+        class: Insead\MIMBundle\Service\Manager\CourseManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [ loadServiceManager,[ "@manager.profilebook", "@manager.sessionsheet", "@manager.calendar","@aip_service" ]]
+
+    manager.announcement:
+        class: Insead\MIMBundle\Service\Manager\AnnouncementManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@redis.adminannouncement", "%acl.config%"]]
+
+    manager.organization:
+      class: Insead\MIMBundle\Service\Manager\OrganizationManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      tags:
+        - { name: monolog.logger, channel: cron }
+
+    manager.country:
+      class: Insead\MIMBundle\Service\Manager\CountryManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+
+    manager.activity:
+        class: Insead\MIMBundle\Service\Manager\ActivityManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@manager.calendar"]]
+
+    manager.session:
+        class: Insead\MIMBundle\Service\Manager\SessionManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@manager.calendar"]]
+
+    manager.sessionhandout:
+        class: Insead\MIMBundle\Service\Manager\SessionHandoutManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.task:
+        class: Insead\MIMBundle\Service\Manager\TaskManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.user:
+        class: Insead\MIMBundle\Service\Manager\UserManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.useragreement:
+        class: Insead\MIMBundle\Service\Manager\UserAgreementManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.userprofile:
+        class: Insead\MIMBundle\Service\Manager\UserProfileManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3","%userprofile.config%", "@redis.main", "@redis.authtoken", "@manager.huddleuser", "@manager.user", "@manager.login", "@manager.organization","@aip_service", "@manager.barco"]]
+
+    manager.extract:
+        class: Insead\MIMBundle\Service\Manager\ExtractManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["%study.backup.config%"]]
+
+    manager.materials:
+        class: Insead\MIMBundle\Service\Manager\CourseMaterialsManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.programmeuser:
+        class: Insead\MIMBundle\Service\Manager\ProgrammeUserManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.programmelogo:
+        class: Insead\MIMBundle\Service\Manager\ProgrammeCompanyLogoManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.s3.config%"]]
+    
+    manager.learning-journey:
+        class: Insead\MIMBundle\Service\Manager\LearningJourneyManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        arguments: ["@study_s3", "%study.s3.config%"]
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.s3.config%"]]
+
+    manager.learningjourney:
+        class: Insead\MIMBundle\Service\Manager\ProgrammeLearningJourneyManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.s3.config%"]]
+
+    manager.userchecker:
+        class: Insead\MIMBundle\Service\Manager\UserCheckerManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@manager.login", "%adws.config%", "%acl.config%", "@aip_service","@manager.userprofile", "@barco.user"]]
+
+    manager.calendar:
+        class: Insead\MIMBundle\Service\Manager\CalendarManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        # arguments: ["@study_s3", "@manager.login"]
+        calls:
+          - [loadServiceManager,["@study_s3", "@manager.login"]]
+
+    manager.profilebook:
+        class: Insead\MIMBundle\Service\Manager\ProfileBookManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "@manager.login", "%profilebook.config%"]]
+
+    manager.adminsessionlocation:
+        class: Insead\MIMBundle\Service\Manager\AdminSessionLocationManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.coordinators:
+        class: Insead\MIMBundle\Service\Manager\CoordinatorManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["%acl.config%","@aip_service", "@manager.userprofile"]]
+
+    manager.templatetask:
+        class: Insead\MIMBundle\Service\Manager\TemplateTaskManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@file.filemanager"]]
+    
+    manager.templatesubtask:
+        class: Insead\MIMBundle\Service\Manager\TemplateSubtaskManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@file.filemanager"]]
+
+    manager.vanillaforum:
+        class: Insead\MIMBundle\Service\Manager\VanillaForumManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.s3.config%", "@vanilla.group", "@vanilla.category", "@vanilla.discussion", "@vanilla.conversation", "%vanilla.config%"]]
+
+    manager.vanillagroup:
+        class: Insead\MIMBundle\Service\Manager\VanillaForumManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "%study.s3.config%", "@vanilla.group", "@vanilla.category", "@vanilla.discussion", "@vanilla.conversation", "%vanilla.config%"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.huddleuser:
+        class: Insead\MIMBundle\Service\Manager\HuddleUserManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@vanilla.user"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.sessionsheet:
+        class: Insead\MIMBundle\Service\Manager\SessionSheetManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@study_s3", "@manager.login", "@manager.programme", "@manager.programmelogo", "@manager.course"]]
+
+    manager.utility:
+      class: Insead\MIMBundle\Service\Manager\UtilityManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["@manager.coursepeople", "%utility.config%"]]
+
+    manager.coursepeople:
+      class: Insead\MIMBundle\Service\Manager\CoursePeopleManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["%course_people.config%","@aip_service", "@manager.userprofile"]]
+
+    manager.maintenance:
+      class: Insead\MIMBundle\Service\Manager\MaintenanceManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["@redis.maintenance", "@redis.authtoken"]]
+
+    manager.barco:
+      class: Insead\MIMBundle\Service\Manager\BarcoManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["@manager.utility","@aip_service", "@manager.userprofile", "@barco.user", "@barco.usergroup", "@manager.userchecker"]]
+
+    manager.companion:
+      class: Insead\MIMBundle\Service\Manager\CompanionManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+
+    manager.token:
+        class: Insead\MIMBundle\Service\Manager\TokenManager
+
+    #Redis Service
+    redis.main:
+        class: Insead\MIMBundle\Service\Redis\Base
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.authtoken:
+        class: Insead\MIMBundle\Service\Redis\AuthToken
+        public: true
+        arguments: ["@parameter_bag", "@logger", "%secret%"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.adminannouncement:
+        class: Insead\MIMBundle\Service\Redis\AdminAnnouncement
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.saml:
+        class: Insead\MIMBundle\Service\Redis\Saml
+        public: true
+        autowire: true
+        autoconfigure: false
+        arguments: ["@parameter_bag", "@logger", "%secret%"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.saml.user.provider:
+        class: InseadSSOBundle\Security\User\RedisSamlUserProvider
+        public: true
+        arguments: ["@logger", "@redis.saml"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.vanilla:
+        class: Insead\MIMBundle\Service\Redis\Vanilla
+        public: true
+        arguments: ["@parameter_bag", "@logger", "%secret%"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.maintenance:
+      class: Insead\MIMBundle\Service\Redis\Maintenance
+      public: true
+      arguments: ["@parameter_bag", "@logger"]
+      tags:
+        - { name: monolog.logger, channel: redis }
+
+    #Vanilla Service
+    vanilla.user:
+        class: Insead\MIMBundle\Service\Vanilla\User
+        public: true
+        arguments: ["%vanilla.config%", "@logger", "@vanilla.role"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.role:
+        class: Insead\MIMBundle\Service\Vanilla\Role
+        public: true
+        arguments: ["%vanilla.config%", "@logger", "@redis.vanilla"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.group:
+        class: Insead\MIMBundle\Service\Vanilla\Group
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.category:
+        class: Insead\MIMBundle\Service\Vanilla\Category
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.discussion:
+        class: Insead\MIMBundle\Service\Vanilla\Discussion
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.conversation:
+        class: Insead\MIMBundle\Service\Vanilla\Conversation
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    #FileManager Service
+    file.filemanager:
+        class: Insead\MIMBundle\Service\File\FileManager
+        public: true
+        arguments: ["%study.s3.config%", "@logger", "@study_notify", "@doctrine.orm.entity_manager", "@study_s3", "@manager.base"]
+        calls:
+          - [setLogUuidFromRequest,["@request_stack"]]
+
+    #Barco Service
+    barco.user:
+        class: Insead\MIMBundle\Service\Barco\User
+        public: true
+        arguments: ["%barco.config%", "@logger"]
+        tags:
+          - { name: monolog.logger, channel: barco }
+
+    barco.usergroup:
+        class: Insead\MIMBundle\Service\Barco\UserGroups
+        public: true
+        arguments: ["%barco.config%", "@logger"]
+        tags:
+          - { name: monolog.logger, channel: barco }

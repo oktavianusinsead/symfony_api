@@ -1,0 +1,121 @@
+Mappings:
+  CWLogs:
+    CombinedApplicationLogGroup:
+      LogFile: "/var/app/current/var/logs/app*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+    CombinedErrorLogGroup:
+      LogFile: "/var/app/current/var/logs/error*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+    CombinedCronLogGroup:
+      LogFile: "/var/app/current/var/logs/cron*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+    CombinedNotifyLogGroup:
+      LogFile: "/var/app/current/var/logs/notify*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+    CombinedBoxLogGroup:
+      LogFile: "/var/app/current/var/logs/box*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+    CombinedRedisLogGroup:
+      LogFile: "/var/app/current/var/logs/redis*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+    CombinedMainLogGroup:
+      LogFile: "/var/app/current/var/logs/main*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+
+Outputs:
+  CombinedApplicationCWLogGroup:
+    Description: "Symfony Application Logs"
+    Value: { "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup"}
+
+
+Resources :
+  AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup:    ## Must have prefix:  AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0
+    Type: "AWS::Logs::LogGroup"
+    DependsOn: AWSEBBeanstalkMetadata
+    DeletionPolicy: Retain     ## this is required
+    Properties:
+      LogGroupName:
+        "Fn::GetOptionSetting":
+          Namespace: "aws:elasticbeanstalk:application:environment"
+          OptionName: CombinedApplicationCWLogGroup
+          DefaultValue: {"Fn::Join":["-", [{ "Ref":"AWSEBEnvironmentName" }, "applicationlogs"]]}
+      RetentionInDays: 30
+
+
+  ## Register the files/log groups for monitoring
+  AWSEBAutoScalingGroup:
+    Metadata:
+      "AWS::CloudFormation::Init":
+        CWLogsAgentConfigSetup:
+          files:
+            ## any .conf file put into /tmp/cwlogs/conf.d will be added to the cwlogs config (see cwl-agent.config)
+            "/tmp/cwlogs/conf.d/combined-log-application.conf":
+              content : |
+                [combined_log_application]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedApplicationLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _application
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedApplicationLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root
+            "/tmp/cwlogs/conf.d/combined-log-error.conf":
+              content : |
+                [combined_log_error]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedErrorLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _error
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedErrorLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root
+            "/tmp/cwlogs/conf.d/combined-log-cron.conf":
+              content : |
+                [combined_log_cron]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedCronLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _cron
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedCronLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root
+            "/tmp/cwlogs/conf.d/combined-log-notify.conf":
+              content : |
+                [combined_log_notify]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedNotifyLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _notify
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedNotifyLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root
+            "/tmp/cwlogs/conf.d/combined-log-box.conf":
+              content : |
+                [combined_log_box]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedBoxLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _box
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedBoxLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root
+            "/tmp/cwlogs/conf.d/combined-log-redis.conf":
+              content : |
+                [combined_log_redis]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedRedisLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _redis
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedRedisLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root
+            "/tmp/cwlogs/conf.d/combined-log-main.conf":
+              content : |
+                [combined_log_main]
+                file = `{"Fn::FindInMap":["CWLogs", "CombinedMainLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CombinedApplicationLogGroup" }`
+                log_stream_name = _main
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CombinedMainLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root

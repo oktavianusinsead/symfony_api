@@ -1,0 +1,41 @@
+[
+  {
+    "name": "admin"
+  },
+  {
+    "name": "coordinator"
+  },
+  {
+    "name": "director"
+  },
+  {
+    "name": "faculty"
+  },
+  {
+    "name": "student"
+  },
+  {
+    "name": "alumni"
+  },
+  {
+    "name": "contact"
+  },
+  {
+    "name": "coordinator"
+  },
+  {
+    "name": "consultant"
+  },
+  {
+    "name": "guest"
+  },
+  {
+    "name": "hidden"
+  },
+  {
+    "name": "manager"
+  },
+  {
+    "name": "advisor"
+  }
+]

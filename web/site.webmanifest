@@ -1,0 +1,11 @@
+{
+  "lang": "en-US",
+  "name": "Study API",
+  "short_name": "Study API",
+  "description": "This app is private",
+  "scope": "/app/",
+  "icons": [{
+    "src": "favicon.ico",
+    "sizes": "16x16"
+  }]
+}

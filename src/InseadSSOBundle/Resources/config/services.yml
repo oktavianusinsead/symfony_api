@@ -1,0 +1,4 @@
+services:
+#    insead_sso.example:
+#        class: InseadSSOBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

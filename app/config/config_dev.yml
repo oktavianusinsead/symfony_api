@@ -1,0 +1,18 @@
+imports:
+    - { resource: config.yml }
+    - { resource: parameters_dev.yml }
+    - { resource: properties_dev.php }
+    - { resource: security.php}
+
+monolog:
+    handlers:
+        applog:
+            type:         stream
+            path:         "%kernel.logs_dir%/api.log"
+            formatter:    "mim_standard_formatter"
+        file:
+            type:         stream
+        main:
+            type:         stream
+        syslog:
+            type:         stream

@@ -1,0 +1,26 @@
+imports:
+    - { resource: parameters_test.yml }
+    - { resource: config.yml }
+    - { resource: security_dev.php}
+
+doctrine:
+  dbal:
+      default_connection: default
+      connections:
+          default:
+              driver:   pdo_sqlite
+              path:     tmp/testing.mysqlite
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler:
+        collect: false
+
+assetic:
+    use_controller: true
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false

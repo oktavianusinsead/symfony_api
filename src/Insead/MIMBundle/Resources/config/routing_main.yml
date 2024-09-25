@@ -1,0 +1,225 @@
+# Insead\MIMBundle\resources\config\routing_main.yml
+
+login:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\LoginController
+
+logout:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\LogOutController
+
+programmes-util:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ProgrammeUtilityController
+
+programmes:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ProgrammeController
+
+courses:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CourseController
+
+course-backup:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CourseBackupController
+
+course-people:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CoursePeopleController
+
+sessions:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\SessionController
+
+session-handouts:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\SessionHandoutsController
+
+activities:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ActivityController
+
+filedocuments:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\FileDocumentController
+
+linked-documents:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\LinkController
+
+links:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\LinkedDocumentsController
+
+video:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\VideoController
+
+announcements:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\AnnouncementController
+
+box:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\BoxController
+
+tasks:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\TaskController
+
+learning-journey:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\LearningJourneyController
+    
+subtasks:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\SubtaskController
+
+user:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserController
+
+user-announcement:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserAnnouncementController
+
+user-favourite:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserFavouriteController
+
+user-profile:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserProfileController
+
+user-read-document:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserReadDocumentController
+
+user-subtask:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserSubtaskController
+
+diagnostics:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\DiagnosticsController
+
+countries:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CountriesController
+
+groups:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\GroupController
+
+groupsession:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\GroupSessionController
+
+groupactivity:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\GroupActivityController
+
+groupsessionattachment:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\GroupSessionAttachmentController
+
+usertokens:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserTokenController
+
+useragreement:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserAgreementController
+
+extracts:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ExtractController
+
+materials:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CourseMaterialsController
+
+programmeuser:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ProgrammeUserController
+
+programmelogo:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ProgrammeCompanyLogoController
+
+programmelearningjourney:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ProgrammeLearningJourneyController
+
+userchecker:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UserCheckerController
+
+calendar:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CalendarController
+
+profilebook:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\ProfileBookController
+
+session-sheets:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\SessionSheetController
+
+adminsessionlocation:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\AdminSessionLocationController
+
+coordinator:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\CoordinatorController
+
+templatetask:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\TemplateTaskController
+
+templatesubtask:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\TemplateSubtaskController
+
+sso-token:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\SsoValidateController
+
+vanillaforum-util:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\VanillaForumUtilsController
+
+vanillaforum-administration:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\VanillaForumAdministrationController
+
+huddle-user:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\Huddle\HuddleUserController
+
+utility:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\UtilityController
+
+maintenance:
+    type:        annotation
+    resource:    Insead\MIMBundle\Controller\MaintenanceController
+
+barco-user:
+  type:          annotation
+  resource:      Insead\MIMBundle\Controller\BarcoUserController
+
+barco-usergroup:
+  type:          annotation
+  resource:      Insead\MIMBundle\Controller\BarcoUserGroupController
+
+companion:
+  type:          annotation
+  resource:      Insead\MIMBundle\Controller\CompanionController
+
+token:
+    type:          annotation
+    resource:      Insead\MIMBundle\Controller\TokenController

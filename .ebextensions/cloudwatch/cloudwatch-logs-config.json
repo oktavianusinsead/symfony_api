@@ -1,0 +1,88 @@
+{
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/httpd/access_log",
+            "log_group_name": "AWSEBEnvironmentName-webrequests-access",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/log/httpd/error_log",
+            "log_group_name": "AWSEBEnvironmentName-webrequests-error",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/app*.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/api.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "_application",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/cron*.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "_cron",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/error*.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "_error",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/main*.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "_main",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/notify*.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "_notify",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/redis*.log",
+            "log_group_name": "AWSEBEnvironmentName-applicationlogs",
+            "log_stream_name": "_redis",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/cron*.log",
+            "log_group_name": "AWSEBEnvironmentName-cronlogs",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/error*.log",
+            "log_group_name": "AWSEBEnvironmentName-errorlogs",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/app/current/var/logs/xray*.log",
+            "log_group_name": "AWSEBEnvironmentName-xraylogs",
+            "log_stream_name": "combined",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/log/php-fpm/www-error.log",
+            "log_group_name": "AWSEBEnvironmentName-php-fpm-error-logs",
+            "log_stream_name": "{instance_id}",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          }
+        ]
+      }
+    }
+  }
+}

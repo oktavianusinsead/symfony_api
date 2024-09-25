@@ -1,0 +1,117 @@
+########################################################################
+## Set up cloudwatch logs
+########################################################################
+packages:
+  yum:
+    awslogs: []
+
+files:
+  "/tmp/cwlogs/conf.d/general.conf":
+    content : |
+      [general]
+      state_file = /var/lib/awslogs/agent-state
+    mode  : "000400"
+    owner : root
+    group : root
+  "/tmp/cwlogs/conf.d/phpwwwerror.conf":
+    content : |
+      [phpFpm]
+      file = /var/log/php-fpm/www-error.log
+      log_group_name = `{"Fn::Join":["-", [{ "Ref":"AWSEBEnvironmentName" }, "php-fpm-error-logs"]]}`
+      log_stream_name = {instance_id}
+      datetime_format = `{"Fn::FindInMap":["CWLogs", "ApplicationLogGroup", "TimestampFormat"]}`
+      initial_position = end_of_file
+    mode  : "000400"
+    owner : root
+    group : root
+  "/etc/awslogs/awscli.conf":
+    content : |
+      [plugins]
+      cwlogs = cwlogs
+      [default]
+      region = `{"Ref" : "AWS::Region" }`
+    mode  : "000400"
+    owner : root
+    group : root
+  "/tmp/cwlogs/bin/cwlogs-install.sh":
+    content: |
+      #!/bin/bash
+      log() {
+         echo [$(date -u +"%Y-%m-%d %TZ")] $1
+      }
+
+      log "Initiating cwlogs agent installation/update"
+      ## ./etc/elasticbeanstalk/.aws-eb-stack.properties
+
+      ENV_EB_RESOURCE_NAME=$(cat /opt/elasticbeanstalk/config/ebenvinfo/resource | xargs)
+      ENV_STACK_NAME=$(cat /opt/elasticbeanstalk/config/ebenvinfo/envid | xargs)
+      ENV_STACK_ID=$(cat /opt/elasticbeanstalk/config/ebenvinfo/stackid | xargs)
+      ENV_EB_REGION=$(cat /opt/elasticbeanstalk/config/ebenvinfo/region | xargs)
+
+      EB_META_DATA_FILE=/tmp/metadata.json
+      ENV_VARS_FILE=/tmp/envvars
+
+      if [ -f $EB_META_DATA_FILE ]; then
+        rm $EB_META_DATA_FILE
+      fi
+
+      if [ -f $ENV_VARS_FILE ]; then
+        rm $ENV_VARS_FILE
+      fi
+
+      /opt/aws/bin/cfn-get-metadata -s $ENV_STACK_ID -r AWSEBBeanstalkMetadata --region $ENV_EB_REGION -k "AWS::ElasticBeanstalk::Ext">${EB_META_DATA_FILE}
+      ENV_VARS=$(jq -r '.Parameters.EnvironmentVariables' < ${EB_META_DATA_FILE})
+      echo ${ENV_VARS} | jq -r 'to_entries[] | [.value] | join("")' >${ENV_VARS_FILE}
+      export $(cat ${ENV_VARS_FILE})
+      if [ -f $EB_META_DATA_FILE ]; then
+        rm $EB_META_DATA_FILE
+      fi
+
+      if [ -f $ENV_VARS_FILE ]; then
+        rm $ENV_VARS_FILE
+      fi
+
+      CONFIG_SET=CWLogsAgentConfigUpdate
+
+      /opt/aws/bin/cfn-init -v -s $ENV_STACK_ID -r $ENV_EB_RESOURCE_NAME --region $ENV_EB_REGION --configsets CWLogsAgentConfigUpdate;
+      log "Completed cwlogs agent installation/update"
+      exit 0;
+    mode  : "000700"
+    owner : root
+    group : root
+
+Resources:
+  AWSEBAutoScalingGroup:
+    Metadata:
+      "AWS::CloudFormation::Init":
+        configSets:
+          "_OnInstanceBoot":
+            "CmpFn::Insert":
+              values:
+                - CWLogsAgentConfigSetup
+          "CWLogsAgentConfigUpdate":
+            - CWLogsAgentConfigSetup
+        CWLogsAgentConfigSetup:
+          commands:
+            01-setup-agent-config:
+              ## Every .conf file in /tmp/cwlogs/conf.d/ will be concatenated together to form the cwl agent config file
+              command: |
+                cat /tmp/cwlogs/conf.d/*.conf > /tmp/cwlogs/cwlogs-config.conf
+
+commands:
+  01-configure-agent-logs:
+    command:  "/tmp/cwlogs/bin/cwlogs-install.sh >> /var/log/eb-cwlogs.log 2>&1"
+  02-update-agent-config:
+    command: |
+      sed -i -- 's/{$AWS_ENVIRONMENT}/'$AWS_ENVIRONMENT'/g' /tmp/cwlogs/cwlogs-config.conf;
+      ## copy config file to awslogs config
+      cp /tmp/cwlogs/cwlogs-config.conf /etc/awslogs/awslogs.conf;
+  03-start-agent:
+    command: |
+      systemctl start awslogsd
+  04-restart-agent:
+    command: |
+      systemctl restart awslogsd
+  05-add-onserver-restart-agent:
+    command: |
+      systemctl enable awslogsd.service

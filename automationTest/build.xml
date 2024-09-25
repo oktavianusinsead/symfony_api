@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<project basedir="." default="build" name="studyINSEAD">
+
+    <!-- Folders for the source code and build -->
+    <property environment="env" />
+    <property name="builddir" value="${env.WORKSPACE}/build" />
+    <property name="srcdir" value="${env.WORKSPACE}" />
+
+    <!-- Target: Clean the workspace -->
+    <target name="clean">
+        <delete dir="${WORKSPACE}"/>
+    </target>
+
+    <!-- Target: Run Sensio Insight analysis -->
+    <target name="sensioAnalyze">
+        <mkdir dir="${builddir}/sensioOutput" />
+        <echo>**** Running Sensio Insight analyze</echo>
+        <exec executable="bash">
+            <arg value="-c" />
+            <arg value="php /var/lib/jenkins/sensio/insight.phar analyze --user-uuid ${sensiouser} --api-token ${sensiotoken} --format=pmd ${sensioproject} >/dev/null 2>&amp;1" />
+        </exec>
+        <echo>**** Pulling Latest Sensio Insight analysis</echo>
+        <exec executable="bash">
+            <arg value="-c" />
+            <arg value="php /var/lib/jenkins/sensio/insight.phar analysis --user-uuid ${sensiouser} --api-token ${sensiotoken} --format=pmd ${sensioproject} --fail-condition=&quot;counts.security > 0&quot; > ${builddir}/sensioOutput/insight-pmd.xml" />
+        </exec>
+    </target>
+
+    <!-- Target: Run PHP Composer -->
+    <target name="runComposer" description="Running Composer">
+        <echo>**** Installing PHP dependencies</echo>
+        <mkdir dir="${builddir}" />
+
+        <exec executable="composer" dir="${srcdir}">
+            <arg value="install" />
+        </exec>
+    </target>
+
+    <!-- Target: Run PHPUnit tests -->
+    <target depends="runComposer" name="runPHPUnit" description="Running PHPUnit tests">
+        <echo>**** Running PHPUnit</echo>
+        <exec executable="php" dir="${builddir}">
+            <arg line="-d zend_extension=/usr/lib/php5/20121212/xdebug.so"/>
+            <arg line="${srcdir}/bin/phpunit" />
+            <arg line="--configuration ${env.WORKSPACE}/app/phpunit.xml.dist" />
+            <arg line="--log-junit ${builddir}/phpunit_results.xml" />
+        </exec>
+    </target>
+
+    <!-- Git commands -->
+	<macrodef name = "git">
+	    <attribute name = "command" />
+	    <attribute name = "dir" default = "" />
+	    <element name = "args" optional = "true" />
+	    <sequential>
+	        <echo message = "git @{command}" />
+	        <exec executable = "git" dir = "@{dir}">
+	            <arg value = "@{command}" />
+	            <args/>
+	        </exec>
+	    </sequential>
+	</macrodef>
+	<!-- End of Git commands -->
+</project>

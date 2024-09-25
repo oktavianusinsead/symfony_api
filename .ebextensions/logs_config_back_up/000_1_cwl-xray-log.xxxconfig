@@ -1,0 +1,43 @@
+Mappings:
+  CWLogs:
+    XrayLogGroup:
+      LogFile: "/var/app/current/var/logs/xray*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+
+Outputs:
+  XrayCWLogGroup:
+    Description: "Symfony Xray Logs"
+    Value: { "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0XrayLogGroup"}
+
+
+Resources :
+  AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0XrayLogGroup:    ## Must have prefix:  AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0
+    Type: "AWS::Logs::LogGroup"
+    DependsOn: AWSEBBeanstalkMetadata
+    DeletionPolicy: Retain     ## this is required
+    Properties:
+      LogGroupName:
+        "Fn::GetOptionSetting":
+          Namespace: "aws:elasticbeanstalk:application:environment"
+          OptionName: XrayCWLogGroup
+          DefaultValue: {"Fn::Join":["-", [{ "Ref":"AWSEBEnvironmentName" }, "xraylogs"]]}
+      RetentionInDays: 30
+
+
+  ## Register the files/log groups for monitoring
+  AWSEBAutoScalingGroup:
+    Metadata:
+      "AWS::CloudFormation::Init":
+        CWLogsAgentConfigSetup:
+          files:
+            ## any .conf file put into /tmp/cwlogs/conf.d will be added to the cwlogs config (see cwl-agent.config)
+            "/tmp/cwlogs/conf.d/xraylogs.conf":
+              content : |
+                [xray_log]
+                file = `{"Fn::FindInMap":["CWLogs", "XrayLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0XrayLogGroup" }`
+                log_stream_name = combined
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "XrayLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root

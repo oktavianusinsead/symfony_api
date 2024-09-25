@@ -1,0 +1,336 @@
+parameters:
+
+framework:
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.project_dir%/app/config/routing.yml"
+        strict_requirements: ~
+        utf8: true
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    default_locale:  "%locale%"
+    session:
+        storage_factory_id: session.storage.factory.native
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
+        cookie_secure: true
+        cookie_samesite: "none"
+        name: "study_session"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+services:
+    session.storage.mim:
+        class:     Insead\MIMBundle\Service\Session\Storage
+
+    id_store:
+        class: InseadSSOBundle\Store\IdStore
+        arguments:
+            - "@logger"
+            - "@redis.saml"
+            - '@LightSaml\Provider\TimeProvider\TimeProviderInterface'
+
+    saml_request:
+        class: InseadSSOBundle\Store\RequestStore
+        arguments:
+            - "@logger"
+            - "@redis.saml"
+
+    ligntsaml_authenticator_provider:
+        class: LightSaml\SpBundle\Security\Http\Authenticator\SamlServiceProviderAuthenticator
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $loginPath: '/saml/login'
+            $checkPath: '/saml/login_check'
+            $usernameMapper: '@lightsaml_sp.username_mapper.simple'
+            $profileBuilder: '@lightsaml.profile.acs'
+            $userProvider: '@security.user.provider.concrete.saml_user_provider'
+            $attributeMapper: '@lightsaml_sp.attribute_mapper.simple'
+            $successHandler: '@insead_lightsaml_success_handler'
+            $failureHandler: '@InseadSSOBundle\EventListener\AuthenticationFailuerHandler'
+            $userCreator: '@user_creator'
+
+    user_creator:
+        class: InseadSSOBundle\Security\User\UserCreator
+        arguments:
+            - "@logger"
+            - "@redis.saml"
+            - "@lightsaml_sp.username_mapper.simple"
+
+    insead_lightsaml_success_handler:
+        class: InseadSSOBundle\EventListener\AuthenticationSuccessHandler
+        arguments:
+            - "@request_stack"
+            - "@logger"
+            - "@redis.saml"
+            - ["%adfs_entity_id%","%adfs_admin_entity_id%","%adfs_ios_entity_id%"]
+            - "%adfs_secure_path%"
+            - "%adfs_cert_file%"
+            - "%adfs_cert_key_file%"
+
+    insead_lightsaml_logout_handler:
+        class: InseadSSOBundle\EventListener\LogoutSuccessHandler
+        arguments:
+            - "@service_container"
+            - "@doctrine.orm.entity_manager"
+            - "@redis.saml"
+            - "@request_stack"
+
+    lightsaml.own.entity_descriptor_provider:
+        class: InseadSSOBundle\Store\InseadLightSamlEntityDescriptorBuilder
+        arguments:
+            - "@request_stack"
+            - ["%adfs_entity_id%","%adfs_admin_entity_id%","%adfs_ios_entity_id%"]
+            - "%adfs_assertion_consumer_path%"
+            - "%adfs_logout_path%"
+            - "%adfs_cert_file%"
+            - [ "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" ]
+            - [ "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" ]
+            - [ "signing" ]
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments: ['@snc_redis.session']
+
+monolog:
+    channels: [cron,notify]
+    handlers:
+        applog:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/app.log"
+            channels:     ['!cron','!notify','!request','!security','!redis','!s3','!xray']
+            level:        info
+            max_files:    3
+        appenvlog:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/%kernel.environment%.log"
+            channels:     ['!cron','!notify','!request','!security','!redis','!s3','!xray']
+            level:        info
+            max_files:    3
+        main:
+            type:         fingers_crossed
+            action_level: warning
+            handler:      file
+            channels:     ['!cron','!notify','!request','!security','!redis','!s3','!xray']
+        file:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/main.log"
+            channels:     ['!cron','!notify','!request','!security','!redis','!s3','!xray']
+            level:        debug
+            max_files:    3
+        syslog:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/error.log"
+            channels:     ['!cron','!notify','!redis','!s3','!xray']
+            level:        error
+            max_files:    3
+        request:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/request.log"
+            channels:     [request]
+            level:        info
+            max_files:    3
+        security:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/security.log"
+            channels:     [security]
+            level:        info
+            max_files:    3
+        cron:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/cron.log"
+            channels:     [cron]
+            level:        info
+            max_files:    3
+        cronerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/cron.log"
+            channels:     [cron]
+            level:        error
+            max_files:    3
+        notify:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/notify.log"
+            channels:     [notify]
+            level:        info
+            max_files:    3
+        notifyerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/notify.log"
+            channels:     [notify]
+            level:        error
+            max_files:    3
+        redis:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/redis.log"
+            channels:     [redis]
+            level:        info
+            max_files:    3
+        rediserror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/redis.log"
+            channels:     [redis]
+            level:        error
+            max_files:    3
+        s3:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/s3.log"
+            channels:     [s3]
+            level:        info
+            max_files:    3
+        s3error:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/s3.log"
+            channels:     [s3]
+            level:        error
+            max_files:    3
+        xray:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/xray.log"
+            channels:     [xray]
+            level:        info
+            max_files:    3
+        xrayerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/xray.log"
+            channels:     [xray]
+            level:        error
+            max_files:    3
+        vanilla:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/vanilla.log"
+            channels:     [vanilla]
+            level:        info
+            max_files:    3
+        vanillaerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/vanilla.log"
+            channels:     [vanilla]
+            level:        error
+            max_files:    3
+        barco:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/barco.log"
+            channels:     [vanilla]
+            level:        info
+            max_files:    3
+        barcoerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/barco.log"
+            channels:     [vanilla]
+            level:        error
+            max_files:    3
+
+doctrine:
+    dbal:
+        default_connection:   default
+        connections:
+            default:
+                driver:   "%database_driver%"
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                server_version: "%database_version%"
+                charset:  UTF8
+                options:
+                    "%database_opts%"
+    orm:
+        auto_generate_proxy_classes: true
+        proxy_dir:            '%kernel.cache_dir%/doctrine/orm/Proxies'
+        proxy_namespace:      Proxies
+        auto_mapping: true
+        dql:
+          string_functions:
+            MONTH: DoctrineExtensions\Query\Mysql\Month
+            YEAR: DoctrineExtensions\Query\Mysql\Year
+            DAY: DoctrineExtensions\Query\Mysql\Day
+
+doctrine_migrations:
+    migrations_paths:
+        'Application\Migrations': "%kernel.project_dir%/app/DoctrineMigrations"
+    storage:
+        # Default (SQL table) metadata storage configuration
+        table_storage:
+            table_name: 'migration_versions'
+
+jms_serializer:
+    visitors:
+      json_serialization:
+            options: [JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE]
+    handlers:
+        datetime:
+            default_format: "c" # ISO8601
+            default_timezone: "UTC"
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener:
+      enabled: true
+      rules:
+        - { path: '^/api/v1.2/ping', priorities: ['json'], fallback_format: 'json' }
+        - { path: '^/saml', priorities: ['html','json'], fallback_format: 'html' }
+        - { path: '^/sso', priorities: ['html','json'], fallback_format: 'html' }
+        - { path: '^/', priorities: ['json'], fallback_format: 'json' }
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml: false
+            text: false
+            html: false
+            rss: false
+        failed_validation: HTTP_BAD_REQUEST
+    routing_loader: false
+
+snc_redis:
+    clients:
+        default:
+            type: phpredis
+            alias: default
+            dsn: "redis://%redis_host%"
+        session:
+            type: phpredis
+            alias: session
+            dsn: "redis://%redis_host%"
+
+light_saml_symfony_bridge:
+    own:
+        entity_id: https://study-api-dev72.insead.edu
+
+        credentials:
+            -
+                certificate: "%adfs_cert_file%"
+                key:         "%adfs_cert_key_file%"
+                password:    ~
+    party:
+        idp:
+            files:
+                - "%adfs_idp_url%"
+
+    store:
+        id_state: id_store  # name of id store service created in step 6
+        request: saml_request
+
+twig:
+    cache: false
+    autoescape: 'html'
+
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Study@INSEAD API Documentation
+            description: This API is used for Web, Admin and Mobile interfaces
+            version: 1.0.0
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+
+security:
+    password_hashers:
+        'Symfony\Component\Security\Core\User\InMemoryUser':
+            algorithm: 'bcrypt'
+            cost: 15

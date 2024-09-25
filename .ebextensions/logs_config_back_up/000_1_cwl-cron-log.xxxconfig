@@ -1,0 +1,43 @@
+Mappings:
+  CWLogs:
+    CronLogGroup:
+      LogFile: "/var/app/current/var/logs/cron*.log"
+      TimestampFormat: "%Y-%m-%d %H:%M:%S"
+
+Outputs:
+  CronCWLogGroup:
+    Description: "Symfony Cron Logs"
+    Value: { "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CronLogGroup"}
+
+
+Resources :
+  AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CronLogGroup:    ## Must have prefix:  AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0
+    Type: "AWS::Logs::LogGroup"
+    DependsOn: AWSEBBeanstalkMetadata
+    DeletionPolicy: Retain     ## this is required
+    Properties:
+      LogGroupName:
+        "Fn::GetOptionSetting":
+          Namespace: "aws:elasticbeanstalk:application:environment"
+          OptionName: CronCWLogGroup
+          DefaultValue: {"Fn::Join":["-", [{ "Ref":"AWSEBEnvironmentName" }, "cronlogs"]]}
+      RetentionInDays: 30
+
+
+  ## Register the files/log groups for monitoring
+  AWSEBAutoScalingGroup:
+    Metadata:
+      "AWS::CloudFormation::Init":
+        CWLogsAgentConfigSetup:
+          files:
+            ## any .conf file put into /tmp/cwlogs/conf.d will be added to the cwlogs config (see cwl-agent.config)
+            "/tmp/cwlogs/conf.d/cronlogs.conf":
+              content : |
+                [cron_log]
+                file = `{"Fn::FindInMap":["CWLogs", "CronLogGroup", "LogFile"]}`
+                log_group_name = `{ "Ref" : "AWSEBCloudWatchLogs8832c8d3f1a54c238a40e36f31ef55a0CronLogGroup" }`
+                log_stream_name = {instance_id}
+                datetime_format = `{"Fn::FindInMap":["CWLogs", "CronLogGroup", "TimestampFormat"]}`
+              mode  : "000400"
+              owner : root
+              group : root

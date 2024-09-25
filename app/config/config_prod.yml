@@ -1,0 +1,107 @@
+# 'prod' is the standard environment for symfony, while 'prd' is the standard abbreviation for INSEAD
+# 'prd' is used in AWS for production
+# configuring prod for sensiolab insights, but this is not used as a live environment
+imports:
+    - { resource: parameters_prod.yml }
+    - { resource: config.yml }
+    - { resource: properties_sensio.php }
+    - { resource: security_dev.php }
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        host:     127.0.0.1
+        port:     null
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.project_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        path:     '%kernel.project_dir%/data.db3'
+
+#override monolog settings
+monolog:
+    channels: [cron,notify]
+    handlers:
+        applog:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/app.log"
+            channels:     ['!cron','!notify','!request','!security','!box','!redis']
+            level:        error
+            max_files:    5
+        appenvlog:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/%kernel.environment%.log"
+            channels:     ['!cron','!notify','!request','!security']
+            level:        error
+            max_files:    5
+        main:
+            type:         fingers_crossed
+            action_level: error
+            handler:      file
+            channels:     ['!cron','!notify','!request','!security']
+        file:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/main.log"
+            channels:     ['!cron','!notify','!request','!security']
+            level:        debug
+            max_files:    5
+        syslog:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/error.log"
+            channels:     ['!cron','!notify']
+            level:        error
+            max_files:    5
+        request:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/request.log"
+            channels:     [request]
+            level:        error
+            max_files:    5
+        security:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/security.log"
+            channels:     [security]
+            level:        error
+            max_files:    5
+        cron:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/cron.log"
+            channels:     [cron]
+            level:        error
+            max_files:    5
+        cronerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/cron.log"
+            channels:     [cron]
+            level:        error
+            max_files:    5
+        notify:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/notify.log"
+            channels:     [notify]
+            level:        error
+            max_files:    5
+        notifyerror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/notify.log"
+            channels:     [notify]
+            level:        error
+            max_files:    5
+        redis:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/redis.log"
+            channels:     [redis]
+            level:        error
+            max_files:    5
+        rediserror:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/redis.log"
+            channels:     [redis]
+            level:        error
+            max_files:    5

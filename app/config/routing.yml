@@ -1,0 +1,29 @@
+# app\config\routing.yml
+
+# MIM API Endpoints
+mim:
+    resource: "@MIMBundle/Resources/config/routing.yml"
+    prefix:   /api/v1.2
+
+# INSEAD SSO
+insead_sso:
+    resource: "@InseadSSOBundle/Controller/"
+    type:     annotation
+    prefix:   /sso
+
+lightsaml_sp.logout:
+    path: /sso/logout
+
+lightsaml_sp:
+    resource: "@LightSamlSpBundle/Resources/config/routing.yml"
+    prefix: saml
+
+app.swagger:
+    path: /api/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger }
+
+app.swagger_ui:
+    path: /api/doc/
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }

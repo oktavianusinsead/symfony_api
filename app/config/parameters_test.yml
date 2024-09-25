@@ -1,0 +1,8 @@
+imports:
+    - { resource: 'parameters_dev.yml' }
+
+parameters:
+    #test specific parameters
+    database_test_name: mim_test
+    database_test_user: mim_api_test
+    database_test_password: mim_api_test
