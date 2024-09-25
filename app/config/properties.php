@@ -4,8 +4,8 @@ $container->setParameter('symfony_environment',         getenv("AWS_ENVIRONMENT"
 $container->setParameter('secret',                      getenv("SYMFONY_SECRET")                              );
 
 // API Connect
-$container->setParameter('study_api_id',               base64_decode( getenv("STUDY_API_ID"))               );
-$container->setParameter('study_api_secret',           base64_decode( getenv("STUDY_API_SECRET"))               );
+$container->setParameter('edot_api_id',               base64_decode( getenv("edot_API_ID"))               );
+$container->setParameter('edot_api_secret',           base64_decode( getenv("edot_API_SECRET"))               );
 
 //box
 $container->setParameter('box_client_id',               base64_decode( getenv("BOX_CLIENT_ID"))               );
@@ -44,7 +44,7 @@ $container->setParameter('backup_url',                  base64_decode( getenv("B
 $container->setParameter('backup_keypair_id',           base64_decode( getenv("BACKUP_KEYPAIR_ID"))           );
 
 //resources
-$container->setParameter('study_resource_bucket',       base64_decode( getenv("STUDY_RESOURCE_BUCKET"))       );
+$container->setParameter('edot_resource_bucket',       base64_decode( getenv("edot_RESOURCE_BUCKET"))       );
 $container->setParameter('cdn_bucket',                  base64_decode( getenv("CDN_BUCKET"))                  );
 
 //ses
@@ -58,24 +58,24 @@ $container->setParameter('aws_secret_key',              base64_decode( getenv("A
 $container->setParameter('aws_region',                  base64_decode( getenv("AWS_REGION"))                  );
 $container->setParameter('aws_sns_platform_app_arn',    base64_decode( getenv("AWS_SNS_PLATFORM_APP_ARN"))    );
 
-//myinsead
-$container->setParameter('myinsead_api_provider_url',   base64_decode( getenv("MYINSEAD_URL"))                );
-$container->setParameter('myinsead_api_app_secret_key', base64_decode( getenv("MYINSEAD_APP_SECRET_KEY"))     );
-$container->setParameter('myinsead_api_secret_key',     base64_decode( getenv("MYINSEAD_SECRET_KEY"))         );
-$container->setParameter('myinsead_api_client_id',      base64_decode( getenv("MYINSEAD_CLIENT_ID"))          );
-$container->setParameter('myinsead_api_iss',            base64_decode( getenv("MYINSEAD_ISS"))                );
-$container->setParameter('myinsead_api_aud',            base64_decode( getenv("MYINSEAD_AUD"))                );
-$container->setParameter('myinsead_api_scope',          base64_decode( getenv("MYINSEAD_SCOPE"))              );
+//myesuite
+$container->setParameter('myesuite_api_provider_url',   base64_decode( getenv("MYesuite_URL"))                );
+$container->setParameter('myesuite_api_app_secret_key', base64_decode( getenv("MYesuite_APP_SECRET_KEY"))     );
+$container->setParameter('myesuite_api_secret_key',     base64_decode( getenv("MYesuite_SECRET_KEY"))         );
+$container->setParameter('myesuite_api_client_id',      base64_decode( getenv("MYesuite_CLIENT_ID"))          );
+$container->setParameter('myesuite_api_iss',            base64_decode( getenv("MYesuite_ISS"))                );
+$container->setParameter('myesuite_api_aud',            base64_decode( getenv("MYesuite_AUD"))                );
+$container->setParameter('myesuite_api_scope',          base64_decode( getenv("MYesuite_SCOPE"))              );
 
 //ad webservice
 $container->setParameter('adws_url',                    base64_decode( getenv("ADWS_URL"))                    );
 $container->setParameter('adws_username',               base64_decode( getenv("ADWS_USERNAME"))               );
 $container->setParameter('adws_password',               base64_decode( getenv("ADWS_PASSWORD"))               );
 
-//study
-$container->setParameter('study_weburl',                base64_decode( getenv("STUDY_WEBURL"))                );
-$container->setParameter('study_adminurl',              base64_decode( getenv("STUDY_ADMINURL"))                );
-$container->setParameter('study_super',                 base64_decode( getenv("STUDY_SUPER"))                 );
+//edot
+$container->setParameter('edot_weburl',                base64_decode( getenv("edot_WEBURL"))                );
+$container->setParameter('edot_adminurl',              base64_decode( getenv("edot_ADMINURL"))                );
+$container->setParameter('edot_super',                 base64_decode( getenv("edot_SUPER"))                 );
 
 //adfs
 $container->setParameter('adfs_entity_id',              base64_decode( getenv("ADFS_ENTITY_ID"))              );
@@ -89,8 +89,8 @@ $container->setParameter('vanilla_master_token',        base64_decode( getenv("V
 $container->setParameter('vanilla_conversation_limit',  base64_decode( getenv("VANILLA_CONVERSATION_LIMIT"))  );
 $container->setParameter('vanilla_category',            base64_decode( getenv("VANILLA_CATEGORY"))  );
 
-//sync MyINSEAD
-$container->setParameter('sync_myinsead',               base64_decode( getenv("SyncMyINSEAD"))  );
+//sync Myesuite
+$container->setParameter('sync_myesuite',               base64_decode( getenv("SyncMyesuite"))  );
 
 //aip config
 $container->setParameter('aip_enabled',                 base64_decode( getenv("AIP_ENABLED"))  );

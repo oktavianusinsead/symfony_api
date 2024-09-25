@@ -12,10 +12,10 @@ return [
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
-    Insead\MIMBundle\MIMBundle::class => ['all' => true],
-    InseadSSOBundle\InseadSSOBundle::class => ['all' => true],
+    esuite\MIMBundle\MIMBundle::class => ['all' => true],
+    esuiteSSOBundle\esuiteSSOBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
-    Insead\MIMLoggingBundle\MIMLoggingBundle::class => ['all' => true, 'dev' => true, 'test' => true],
+    esuite\MIMLoggingBundle\MIMLoggingBundle::class => ['all' => true, 'dev' => true, 'test' => true],
     Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true, 'dev' => true, 'test' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
 ];

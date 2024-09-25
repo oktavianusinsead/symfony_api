@@ -1,7 +1,7 @@
 {
   "lang": "en-US",
-  "name": "Study API",
-  "short_name": "Study API",
+  "name": "edot API",
+  "short_name": "edot API",
   "description": "This app is private",
   "scope": "/app/",
   "icons": [{

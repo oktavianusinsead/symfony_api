@@ -12,7 +12,7 @@ $container->loadFromExtension('security', array(
         'in_memory' => array(
             'memory' => array(
                 'users' => array(
-                    'studysuper' => array(
+                    'edotsuper' => array(
                         'password' => base64_decode($DIAG_PASSWORD),
                         'roles' => 'ROLE_DIAG'
                     ),
@@ -28,7 +28,7 @@ $container->loadFromExtension('security', array(
                         'password' => base64_decode($COMPANION_PASSWORD),
                         'roles' => 'ROLE_DIAG'
                     ),
-                    'studyapidocumentor' => array(
+                    'edotapidocumentor' => array(
                         'password' => base64_decode($APIDOC_PASSWORD),
                         'roles' => 'ROLE_DOCUMENTATION'
                     ),

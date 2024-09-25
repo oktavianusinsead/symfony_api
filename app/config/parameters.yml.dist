@@ -33,8 +33,8 @@ parameters:
     # This header contains the Client id
     oauth_header_param: ~
 
-    # MyInsead API Endpoints Provider URL
-    myinsead_api_provider_url: ~
+    # Myesuite API Endpoints Provider URL
+    myesuite_api_provider_url: ~
 
     # Embed.ly API Key
     embedly_api_key: ~
@@ -67,11 +67,11 @@ parameters:
     box_upload_path: '/api'
     box_api_url: '/2.0'
 
-    # Study URL
-    study_weburl: ~
-    study_super: ~
-    study_api_id: ~
-    study_api_secret: ~
+    # edot URL
+    edot_weburl: ~
+    edot_super: ~
+    edot_api_id: ~
+    edot_api_secret: ~
 
     # VanillaForums
     vanilla_base_url: ~
@@ -80,7 +80,7 @@ parameters:
     vanilla_conversation_limit: ~
     vanilla_category: ~
 
-    sync_myinsead: ~
+    sync_myesuite: ~
     aip_enabled: ~
     aip_base_url: ~
     aip_client_id: ~

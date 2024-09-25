@@ -2,10 +2,10 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/Insead/MIMBundle" isTestSource="false" packagePrefix="Insead\MIMBundle\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Insead/MIMLoggingBundle" isTestSource="false" packagePrefix="Insead\MIMLoggingBundle\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Insead/MIMSeedFixturesBundle" isTestSource="false" packagePrefix="Insead\MIMSeedFixturesBundle\" />
-      <sourceFolder url="file://$MODULE_DIR$/src/InseadSSOBundle" isTestSource="false" packagePrefix="InseadSSOBundle\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/esuite/MIMBundle" isTestSource="false" packagePrefix="esuite\MIMBundle\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/esuite/MIMLoggingBundle" isTestSource="false" packagePrefix="esuite\MIMLoggingBundle\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/esuite/MIMSeedFixturesBundle" isTestSource="false" packagePrefix="esuite\MIMSeedFixturesBundle\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/esuiteSSOBundle" isTestSource="false" packagePrefix="esuiteSSOBundle\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />

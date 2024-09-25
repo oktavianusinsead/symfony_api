@@ -15,24 +15,24 @@ framework:
         handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
         cookie_secure: true
         cookie_samesite: "none"
-        name: "study_session"
+        name: "edot_session"
     fragments:       ~
     http_method_override: true
     assets: ~
 
 services:
     session.storage.mim:
-        class:     Insead\MIMBundle\Service\Session\Storage
+        class:     esuite\MIMBundle\Service\Session\Storage
 
     id_store:
-        class: InseadSSOBundle\Store\IdStore
+        class: esuiteSSOBundle\Store\IdStore
         arguments:
             - "@logger"
             - "@redis.saml"
             - '@LightSaml\Provider\TimeProvider\TimeProviderInterface'
 
     saml_request:
-        class: InseadSSOBundle\Store\RequestStore
+        class: esuiteSSOBundle\Store\RequestStore
         arguments:
             - "@logger"
             - "@redis.saml"
@@ -48,19 +48,19 @@ services:
             $profileBuilder: '@lightsaml.profile.acs'
             $userProvider: '@security.user.provider.concrete.saml_user_provider'
             $attributeMapper: '@lightsaml_sp.attribute_mapper.simple'
-            $successHandler: '@insead_lightsaml_success_handler'
-            $failureHandler: '@InseadSSOBundle\EventListener\AuthenticationFailuerHandler'
+            $successHandler: '@esuite_lightsaml_success_handler'
+            $failureHandler: '@esuiteSSOBundle\EventListener\AuthenticationFailuerHandler'
             $userCreator: '@user_creator'
 
     user_creator:
-        class: InseadSSOBundle\Security\User\UserCreator
+        class: esuiteSSOBundle\Security\User\UserCreator
         arguments:
             - "@logger"
             - "@redis.saml"
             - "@lightsaml_sp.username_mapper.simple"
 
-    insead_lightsaml_success_handler:
-        class: InseadSSOBundle\EventListener\AuthenticationSuccessHandler
+    esuite_lightsaml_success_handler:
+        class: esuiteSSOBundle\EventListener\AuthenticationSuccessHandler
         arguments:
             - "@request_stack"
             - "@logger"
@@ -70,8 +70,8 @@ services:
             - "%adfs_cert_file%"
             - "%adfs_cert_key_file%"
 
-    insead_lightsaml_logout_handler:
-        class: InseadSSOBundle\EventListener\LogoutSuccessHandler
+    esuite_lightsaml_logout_handler:
+        class: esuiteSSOBundle\EventListener\LogoutSuccessHandler
         arguments:
             - "@service_container"
             - "@doctrine.orm.entity_manager"
@@ -79,7 +79,7 @@ services:
             - "@request_stack"
 
     lightsaml.own.entity_descriptor_provider:
-        class: InseadSSOBundle\Store\InseadLightSamlEntityDescriptorBuilder
+        class: esuiteSSOBundle\Store\esuiteLightSamlEntityDescriptorBuilder
         arguments:
             - "@request_stack"
             - ["%adfs_entity_id%","%adfs_admin_entity_id%","%adfs_ios_entity_id%"]
@@ -299,7 +299,7 @@ snc_redis:
 
 light_saml_symfony_bridge:
     own:
-        entity_id: https://study-api-dev72.insead.edu
+        entity_id: https://edot-api-dev72.esuite.edu
 
         credentials:
             -
@@ -322,7 +322,7 @@ twig:
 nelmio_api_doc:
     documentation:
         info:
-            title: Study@INSEAD API Documentation
+            title: edot@esuite API Documentation
             description: This API is used for Web, Admin and Mobile interfaces
             version: 1.0.0
     areas: # to filter documented areas

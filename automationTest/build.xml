@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<project basedir="." default="build" name="studyINSEAD">
+<project basedir="." default="build" name="edotesuite">
 
     <!-- Folders for the source code and build -->
     <property environment="env" />

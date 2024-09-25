@@ -1,4 +1,4 @@
-# 'prod' is the standard environment for symfony, while 'prd' is the standard abbreviation for INSEAD
+# 'prod' is the standard environment for symfony, while 'prd' is the standard abbreviation for esuite
 # 'prd' is used in AWS for production
 # configuring prod for sensiolab insights, but this is not used as a live environment
 imports:

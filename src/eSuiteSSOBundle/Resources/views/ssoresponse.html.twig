@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <title>edot@esuite</title>
+</head>
+<body>
+<script>
+    var opener=window.opener||window.parent;
+    var credentials={
+        "access_token": "{{ auth.access_token }}",
+        "refresh_token": "{{ auth.refresh_token }}",
+        "token_expiry": "{{ auth.token_expiry }}",
+        "peoplesoft_id": "{{ auth.peoplesoft_id }}",
+        "scope": "{{ auth.scope }}",
+        "agreement": "{{ auth.agreement }}"
+    };
+
+    if(navigator.appVersion.indexOf('Trident')===-1)opener.postMessage({key:'mimsso',payload:credentials},'*');
+    else{//insecure fallback for internet explorer
+        var url=window.location.href.replace(/mim/,'edot')+'?';
+        Object.keys(credentials).forEach(function(k){url+=k+'='+encodeURIComponent(credentials[k])+'&'});
+        url=url.substr(0,url.length-1);
+        window.location=url;
+    }
+</script>
+</body>
+</html>

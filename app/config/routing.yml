@@ -5,9 +5,9 @@ mim:
     resource: "@MIMBundle/Resources/config/routing.yml"
     prefix:   /api/v1.2
 
-# INSEAD SSO
-insead_sso:
-    resource: "@InseadSSOBundle/Controller/"
+# esuite SSO
+esuite_sso:
+    resource: "@esuiteSSOBundle/Controller/"
     type:     annotation
     prefix:   /sso
 

@@ -1,17 +1,9 @@
 {
-    "name": "insead/study-api",
+    "name": "api/edot-api",
     "license": "proprietary",
     "type": "project",
-    "description": "Study@INSEAD API: Core component that is used by the Admin, iOS and web apps of Study@INSEAD",
-    "autoload": {
-        "psr-4": {
-            "Insead\\MIMBundle\\": "src/Insead/MIMBundle/",
-            "Insead\\MIMSeedFixturesBundle\\": "src/Insead/MIMSeedFixturesBundle/",
-            "Insead\\MIMLoggingBundle\\": "src/Insead/MIMLoggingBundle/",
-            "InseadSSOBundle\\": "src/InseadSSOBundle/"
-        },
-        "files": ["app/AppKernel.php"]
-    },
+    "description": "edot@esuite API: Core component that is used by the Admin, iOS and web apps of edot@esuite",
+    
     "config": {
       "platform": {
         "php": "8.2.7"

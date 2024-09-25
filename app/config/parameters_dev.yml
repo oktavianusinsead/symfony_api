@@ -24,7 +24,7 @@ parameters:
     user_profile_pictures_path: ../tmp/downloads
 
     # Authorization Server URL
-    oauth_server_url: https://as-uat.insead.edu/app-mim/oauth/token
+    oauth_server_url: https://as-uat.esuite.edu/app-mim/oauth/token
 
     # Authorization Server Assertion
     oauth_server_assertion: client-assertion-mim-readwrite:xnmKFUUiZDAKWol2UuMe4xrt7bqpaMn7a8wtKYSfyU
@@ -32,8 +32,8 @@ parameters:
     # This header contains the Client id
     oauth_header_param: Basic Y2xpZW50LXJzY293bi1taW0tcmVhZHdyaXRlOlBVdDJYMUtubnppT3VuZnJZZHltdnk3S1NxbFJOMDBaZE9sU1IzTUszTQ==
 
-    # MyInsead API Endpoints Provider URL
-    myinsead_api_provider_url: https://my-int.insead.edu/api/rest/mim
+    # Myesuite API Endpoints Provider URL
+    myesuite_api_provider_url: https://my-int.esuite.edu/api/rest/mim
 
     # Embed.ly API Key
     embedly_api_key: 50edb69fb40249fab7466f3616d62981
@@ -52,26 +52,26 @@ parameters:
     backup_url: ~
     backup_keypair_id: ~
 
-    # Study Resource Bucket
-    study_resource_bucket: ~
+    # edot Resource Bucket
+    edot_resource_bucket: ~
     cdn_bucket: ~
 
     # Redis server configuration
     redis_host: ~
     redis_port: ~
-    redis_prefix: "study"
+    redis_prefix: "edot"
 
     # SSO ADFS logout
-    saml_logout: 'https://federation-uat.insead.edu/adfs/ls/?wa=wsignout1.0'
+    saml_logout: 'https://federation-uat.esuite.edu/adfs/ls/?wa=wsignout1.0'
     adfs_entity_id: ~
     adfs_admin_entity_id: ~
     adfs_ios_entity_id: ~
     adfs_secure_path: '/sso'
     adfs_assertion_consumer_path: '/saml/login_check'
     adfs_logout_path: '/sso/logout'
-    adfs_idp_url: 'https://cdn.insead.edu/adfs/adfs-uat-federationmetadata.xml'
-    adfs_cert_file: '/var/www/certs/study-light-saml-dev.crt'
-    adfs_cert_key_file: '/var/www/certs/study-light-saml-dev.pem'
+    adfs_idp_url: 'https://cdn.esuite.edu/adfs/adfs-uat-federationmetadata.xml'
+    adfs_cert_file: '/var/www/certs/edot-light-saml-dev.crt'
+    adfs_cert_key_file: '/var/www/certs/edot-light-saml-dev.pem'
 
     # Box OAuth
     box_client_id: ~
@@ -90,11 +90,11 @@ parameters:
     adws_username: ~
     adws_password: ~
 
-    # Study URL
-    study_weburl: ~
-    study_super: ~
-    study_api_id: ~
-    study_api_secret: ~
+    # edot URL
+    edot_weburl: ~
+    edot_super: ~
+    edot_api_id: ~
+    edot_api_secret: ~
 
     # VanillaForums
     vanilla_base_url: ~
@@ -103,7 +103,7 @@ parameters:
     vanilla_conversation_limit: ~
     vanilla_category: ~
 
-    sync_myinsead: ~
+    sync_myesuite: ~
     aip_enabled: ~
     aip_base_url: ~
     aip_client_id: ~

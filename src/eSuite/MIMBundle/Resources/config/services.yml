@@ -1,0 +1,751 @@
+parameters:
+    service.oauth_client:           esuite\MIMBundle\Service\Oauth\OauthClient
+    daterange.validator.class:      esuite\MIMBundle\Validator\Constraints\DateRangeValidator
+
+    authentication.service.oauth_client.config:
+        url:    "%oauth_server_url%"
+        auth_header: "%oauth_header_param%"
+
+    edot.notify.config:
+        symfony_environment: "%symfony_environment%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        aws_sns_platform_app_arn: "%aws_sns_platform_app_arn%"
+        kernel_environment: "%kernel.environment%"
+
+    edot.backup.config:
+        symfony_environment: "%symfony_environment%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        aws_ses_cc_email: "%aws_ses_cc_email%"
+        aws_ses_from_email: "%aws_ses_from_email%"
+        aws_ses_review_cc_email: "%aws_ses_review_cc_email%"
+        aws_s3_bucket: "%aws_s3_bucket%"
+        backup_url: "%backup_url%"
+        backup_keypair_id: "%backup_keypair_id%"
+        edot_weburl: "%edot_weburl%"
+        upload_temp_folder: "%upload_temp_folder%"
+        kernel_root: "%kernel.project_dir%"
+
+    edot.s3.config:
+        symfony_environment: "%symfony_environment%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        backup_url: "%backup_url%"
+        backup_keypair_id: "%backup_keypair_id%"
+        edot_resource_bucket: "%edot_resource_bucket%"
+        cdn_bucket: "%cdn_bucket%"
+        aws_s3_bucket: "%aws_s3_bucket%"
+        upload_temp_folder: "%upload_temp_folder%"
+        kernel_root: "%kernel.project_dir%"
+
+    edot.extract.config:
+        embedly_api_key:    "%embedly_api_key%"
+
+    box.config:
+        symfony_environment: "%symfony_environment%"
+        box_client_id: "%box_client_id%"
+        box_client_secret: "%box_client_secret%"
+        box_enterprise_id: "%box_enterprise_id%"
+        box_master_id: "%box_master_id%"
+        box_cert_pass: "%box_cert_pass%"
+        box_cert_id: "%box_cert_id%"
+        box_base_url: "%box_base_url%"
+        box_upload_url: "%box_upload_url%"
+        box_upload_path: "%box_upload_path%"
+        box_api_url: "%box_api_url%"
+
+    box.path.config:
+        upload_temp_folder: "%upload_temp_folder%"
+        kernel_root: "%kernel.project_dir%"
+
+    adws.config:
+        adws_url: "%adws_url%"
+        adws_username: "%adws_username%"
+        adws_password: "%adws_password%"
+
+    redis.config:
+        symfony_environment: "%symfony_environment%"
+        redis_host: "%redis_host%"
+        redis_port: "%redis_port%"
+
+    profilebook.config:
+        secret: "%secret%"
+        aip_config: "%aip.config%"
+
+    acl.config:
+        symfony_environment: "%symfony_environment%"
+        edot_super: "%edot_super%"
+        aws_access_key_id: "%aws_access_key_id%"
+        aws_secret_key: "%aws_secret_key%"
+        aws_region: "%aws_region%"
+        aws_ses_from_email: "%aws_ses_from_email%"
+        aws_ses_review_cc_email: "%aws_ses_review_cc_email%"
+
+    vanilla.config:
+        symfony_environment: "%symfony_environment%"
+        vanilla_base_url: "%vanilla_base_url%"
+        vanilla_api_url: "%vanilla_api_url%"
+        vanilla_master_token: "%vanilla_master_token%"
+        vanilla_conversation_limit: "%vanilla_conversation_limit%"
+        vanilla_category: "%vanilla_category%"
+
+    userprofile.config:
+      secret: "%secret%"
+      symfony_environment: "%symfony_environment%"
+      aws_access_key_id: "%aws_access_key_id%"
+      aws_secret_key: "%aws_secret_key%"
+      aws_region: "%aws_region%"
+      aws_ses_cc_email: "%aws_ses_cc_email%"
+      aws_ses_from_email: "%aws_ses_from_email%"
+      aws_ses_review_cc_email: "%aws_ses_review_cc_email%"
+      aws_s3_bucket: "%aws_s3_bucket%"
+      kernel_root: "%kernel.project_dir%"
+      upload_temp_folder: "%upload_temp_folder%"
+      aip_config: "%aip.config%"
+
+    course_people.config:
+      aip_config: "%aip.config%"
+
+    aip.config:
+      aip_enabled: "%aip_enabled%"
+      aip_base_url: "%aip_base_url%"
+      aip_client_id: "%aip_client_id%"
+      aip_client_secret: "%aip_client_secret%"
+      aip_person_enabled: "%aip_person_enabled%"
+      aip_person_base_url: "%aip_person_base_url%"
+      aip_person_client_id: "%aip_person_client_id%"
+      aip_person_client_secret: "%aip_person_client_secret%"
+      aip_person_keys: "%aip_person_keys%"
+    
+    utility.config:
+      upload_temp_folder: "%upload_temp_folder%"
+      kernel_root: "%kernel.project_dir%"
+      edot_api_id: "%edot_api_id%"
+      edot_api_secret: "%edot_api_secret%"
+
+    barco.config:
+      barco_weconnect_api_key: "%barco_weconnect_api_key%"
+      barco_weconnect_api_url: "%barco_weconnect_api_url%"
+      symfony_environment: "%symfony_environment%"
+
+services:
+    _defaults:
+      autowire: true
+      autoconfigure: true
+      public: false
+      bind:
+          $secret: "%secret%"
+
+    esuite\MIMBundle\:
+        resource: '../../../MIMBundle'
+        exclude:
+            - '../../../MIMBundle/{DependencyInjection,Tests,Entity}'
+
+    esuite\MIMLoggingBundle\:
+        resource: '../../../MIMLoggingBundle'
+        exclude:
+            - '../../../MIMLoggingBundle/DependencyInjection'
+
+    esuite\MIMSeedFixturesBundle\:
+        resource: '../../../MIMSeedFixturesBundle'
+        exclude:
+            - '../../../MIMSeedFixturesBundle/DependencyInjection'
+
+    esuiteSSOBundle\:
+        resource: '../../../../esuiteSSOBundle'
+
+    Doctrine\ORM\EntityManager:
+        alias: doctrine.orm.default_entity_manager
+        public: false
+
+    serializer:
+      alias: 'jms_serializer.serializer'
+      public: true
+
+    lightsaml_service_binding_factory:
+      class: LightSaml\Binding\BindingFactoryInterface
+      public: true
+
+    lightsaml_container_build:
+      class: LightSaml\SymfonyBridgeBundle\Bridge\Container\BuildContainer
+      public: true
+
+    app.security_listener:
+        class: esuite\MIMBundle\Listener\SecurityListener
+        public: true
+        arguments:
+            $logger: "@logger"
+
+    kernel.listener.esuite_mimbundle_exception_listener:
+      class: esuite\MIMBundle\Listener\ExceptionListener
+      public: true
+      arguments: ["@logger", "@twig"]
+      tags:
+          - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+    app.cors_listener:
+        class: esuite\MIMBundle\Listener\CorsListener
+        public: true
+        arguments:
+            $logger: "@logger"
+
+    app.xraylog_listener:
+        class: esuite\MIMBundle\Listener\XrayLogListener
+        public: true
+        arguments:
+            $logger: "@logger"
+        tags:
+            - { name: monolog.logger, channel: xray }
+
+    app.token_listener:
+        class: esuite\MIMBundle\Listener\AuthTokenListener
+        arguments: ["@doctrine.orm.entity_manager", "@request_stack", "@security.authorization_checker", "@logger", "@redis.authtoken", "%secret%"]
+
+
+    app.scope_listener:
+        class: esuite\MIMBundle\Listener\ScopeListener
+        public: true
+        arguments: ["@logger", "@annotation_reader"]
+
+    app.maintenance_listener:
+        class: esuite\MIMBundle\Listener\MaintenanceListener
+        public: true
+        arguments: ["@manager.maintenance", "@request_stack"]
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+
+    authentication.oauth_client:
+        class: "%service.oauth_client%"
+        public: true
+        arguments: ["%authentication.service.oauth_client.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: oauth_client }
+
+    edot_notify:
+        class: esuite\MIMBundle\Service\edotNotify
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: notify }
+
+    edot_backup:
+        class: esuite\MIMBundle\Service\edotCourseBackup
+        public: true
+        arguments: ["@doctrine.orm.entity_manager", "@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    edot_extract:
+        class: esuite\MIMBundle\Service\edotExtract
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+
+    daterange.validator:
+        class: "%daterange.validator.class%"
+        arguments:
+            $logger: "@logger"
+        tags:
+            - { name: validator.constraint_validator, alias: daterange_validator }
+
+    edot_s3:
+        class: esuite\MIMBundle\Service\S3ObjectManager
+        arguments: ["%edot.s3.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: s3 }
+
+    aip_service:
+        class: esuite\MIMBundle\Service\AIPService
+        public: true
+        arguments: ["@logger", "%aip.config%", "@rest_http_service"]
+
+    rest_http_service:
+      class: esuite\MIMBundle\Service\RestHTTPService
+      public: true
+      arguments: ["@logger"]
+
+    #Managers
+    manager.abstractBase:
+        class: esuite\MIMBundle\Service\Manager\AbstractBase
+        public: false
+        abstract: true
+        arguments: [ "@redis.main", "@logger", "@edot_notify", "@doctrine.orm.entity_manager", "@validator", "@jms_serializer.serializer", "@edot_backup" ]
+        calls:
+            - [ setLogUuIdFromService,[ "@request_stack" ] ]
+            - [ setUserProfile,[ "@manager.userprofile" ] ]
+            - [ setEnvironment,[ "%kernel.environment%" ] ]
+
+    manager.base:
+        class: esuite\MIMBundle\Service\Manager\Base
+        public: true
+        arguments: [ "@redis.main", "@logger", "@edot_notify", "@doctrine.orm.entity_manager", "@validator", "@jms_serializer.serializer", "@edot_backup" ]
+        calls:
+            - [ setLogUuIdFromService,[ "@request_stack" ] ]
+
+    manager.croncoursebackup:
+        class: esuite\MIMBundle\Service\Manager\CronCourseBackupManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.backup.config%", "@file.filemanager"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.cronpendingattachment:
+        class: esuite\MIMBundle\Service\Manager\CronPendingAttachmentManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.backup.config%"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.cronarchiveusertoken:
+        class: esuite\MIMBundle\Service\Manager\CronArchiveUserTokenManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.coursebackup:
+        class: esuite\MIMBundle\Service\Manager\CourseBackupManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@redis.main"]]
+
+    manager.login:
+        class: esuite\MIMBundle\Service\Manager\LoginManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@redis.authtoken", "%acl.config%"]]
+
+    manager.programme:
+        class: esuite\MIMBundle\Service\Manager\ProgrammeManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "@manager.login", "%acl.config%"]]
+
+    manager.course:
+        class: esuite\MIMBundle\Service\Manager\CourseManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [ loadServiceManager,[ "@manager.profilebook", "@manager.sessionsheet", "@manager.calendar","@aip_service" ]]
+
+    manager.announcement:
+        class: esuite\MIMBundle\Service\Manager\AnnouncementManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@redis.adminannouncement", "%acl.config%"]]
+
+    manager.organization:
+      class: esuite\MIMBundle\Service\Manager\OrganizationManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      tags:
+        - { name: monolog.logger, channel: cron }
+
+    manager.country:
+      class: esuite\MIMBundle\Service\Manager\CountryManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+
+    manager.activity:
+        class: esuite\MIMBundle\Service\Manager\ActivityManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@manager.calendar"]]
+
+    manager.session:
+        class: esuite\MIMBundle\Service\Manager\SessionManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@manager.calendar"]]
+
+    manager.sessionhandout:
+        class: esuite\MIMBundle\Service\Manager\SessionHandoutManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.task:
+        class: esuite\MIMBundle\Service\Manager\TaskManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.user:
+        class: esuite\MIMBundle\Service\Manager\UserManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.useragreement:
+        class: esuite\MIMBundle\Service\Manager\UserAgreementManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.userprofile:
+        class: esuite\MIMBundle\Service\Manager\UserProfileManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3","%userprofile.config%", "@redis.main", "@redis.authtoken", "@manager.huddleuser", "@manager.user", "@manager.login", "@manager.organization","@aip_service", "@manager.barco"]]
+
+    manager.extract:
+        class: esuite\MIMBundle\Service\Manager\ExtractManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["%edot.backup.config%"]]
+
+    manager.materials:
+        class: esuite\MIMBundle\Service\Manager\CourseMaterialsManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.programmeuser:
+        class: esuite\MIMBundle\Service\Manager\ProgrammeUserManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.programmelogo:
+        class: esuite\MIMBundle\Service\Manager\ProgrammeCompanyLogoManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.s3.config%"]]
+    
+    manager.learning-journey:
+        class: esuite\MIMBundle\Service\Manager\LearningJourneyManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        arguments: ["@edot_s3", "%edot.s3.config%"]
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.s3.config%"]]
+
+    manager.learningjourney:
+        class: esuite\MIMBundle\Service\Manager\ProgrammeLearningJourneyManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.s3.config%"]]
+
+    manager.userchecker:
+        class: esuite\MIMBundle\Service\Manager\UserCheckerManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@manager.login", "%adws.config%", "%acl.config%", "@aip_service","@manager.userprofile", "@barco.user"]]
+
+    manager.calendar:
+        class: esuite\MIMBundle\Service\Manager\CalendarManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        # arguments: ["@edot_s3", "@manager.login"]
+        calls:
+          - [loadServiceManager,["@edot_s3", "@manager.login"]]
+
+    manager.profilebook:
+        class: esuite\MIMBundle\Service\Manager\ProfileBookManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "@manager.login", "%profilebook.config%"]]
+
+    manager.adminsessionlocation:
+        class: esuite\MIMBundle\Service\Manager\AdminSessionLocationManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+
+    manager.coordinators:
+        class: esuite\MIMBundle\Service\Manager\CoordinatorManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["%acl.config%","@aip_service", "@manager.userprofile"]]
+
+    manager.templatetask:
+        class: esuite\MIMBundle\Service\Manager\TemplateTaskManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@file.filemanager"]]
+    
+    manager.templatesubtask:
+        class: esuite\MIMBundle\Service\Manager\TemplateSubtaskManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@file.filemanager"]]
+
+    manager.vanillaforum:
+        class: esuite\MIMBundle\Service\Manager\VanillaForumManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.s3.config%", "@vanilla.group", "@vanilla.category", "@vanilla.discussion", "@vanilla.conversation", "%vanilla.config%"]]
+
+    manager.vanillagroup:
+        class: esuite\MIMBundle\Service\Manager\VanillaForumManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "%edot.s3.config%", "@vanilla.group", "@vanilla.category", "@vanilla.discussion", "@vanilla.conversation", "%vanilla.config%"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.huddleuser:
+        class: esuite\MIMBundle\Service\Manager\HuddleUserManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@vanilla.user"]]
+        tags:
+            - { name: monolog.logger, channel: cron }
+
+    manager.sessionsheet:
+        class: esuite\MIMBundle\Service\Manager\SessionSheetManager
+        public: true
+        parent: manager.abstractBase
+        autowire: true
+        autoconfigure: false
+        calls:
+          - [loadServiceManager,["@edot_s3", "@manager.login", "@manager.programme", "@manager.programmelogo", "@manager.course"]]
+
+    manager.utility:
+      class: esuite\MIMBundle\Service\Manager\UtilityManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["@manager.coursepeople", "%utility.config%"]]
+
+    manager.coursepeople:
+      class: esuite\MIMBundle\Service\Manager\CoursePeopleManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["%course_people.config%","@aip_service", "@manager.userprofile"]]
+
+    manager.maintenance:
+      class: esuite\MIMBundle\Service\Manager\MaintenanceManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["@redis.maintenance", "@redis.authtoken"]]
+
+    manager.barco:
+      class: esuite\MIMBundle\Service\Manager\BarcoManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+      calls:
+        - [loadServiceManager,["@manager.utility","@aip_service", "@manager.userprofile", "@barco.user", "@barco.usergroup", "@manager.userchecker"]]
+
+    manager.companion:
+      class: esuite\MIMBundle\Service\Manager\CompanionManager
+      public: true
+      parent: manager.abstractBase
+      autowire: true
+      autoconfigure: false
+
+    manager.token:
+        class: esuite\MIMBundle\Service\Manager\TokenManager
+
+    #Redis Service
+    redis.main:
+        class: esuite\MIMBundle\Service\Redis\Base
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.authtoken:
+        class: esuite\MIMBundle\Service\Redis\AuthToken
+        public: true
+        arguments: ["@parameter_bag", "@logger", "%secret%"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.adminannouncement:
+        class: esuite\MIMBundle\Service\Redis\AdminAnnouncement
+        public: true
+        arguments: ["@parameter_bag", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.saml:
+        class: esuite\MIMBundle\Service\Redis\Saml
+        public: true
+        autowire: true
+        autoconfigure: false
+        arguments: ["@parameter_bag", "@logger", "%secret%"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.saml.user.provider:
+        class: esuiteSSOBundle\Security\User\RedisSamlUserProvider
+        public: true
+        arguments: ["@logger", "@redis.saml"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.vanilla:
+        class: esuite\MIMBundle\Service\Redis\Vanilla
+        public: true
+        arguments: ["@parameter_bag", "@logger", "%secret%"]
+        tags:
+            - { name: monolog.logger, channel: redis }
+
+    redis.maintenance:
+      class: esuite\MIMBundle\Service\Redis\Maintenance
+      public: true
+      arguments: ["@parameter_bag", "@logger"]
+      tags:
+        - { name: monolog.logger, channel: redis }
+
+    #Vanilla Service
+    vanilla.user:
+        class: esuite\MIMBundle\Service\Vanilla\User
+        public: true
+        arguments: ["%vanilla.config%", "@logger", "@vanilla.role"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.role:
+        class: esuite\MIMBundle\Service\Vanilla\Role
+        public: true
+        arguments: ["%vanilla.config%", "@logger", "@redis.vanilla"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.group:
+        class: esuite\MIMBundle\Service\Vanilla\Group
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.category:
+        class: esuite\MIMBundle\Service\Vanilla\Category
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.discussion:
+        class: esuite\MIMBundle\Service\Vanilla\Discussion
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    vanilla.conversation:
+        class: esuite\MIMBundle\Service\Vanilla\Conversation
+        public: true
+        arguments: ["%vanilla.config%", "@logger"]
+        tags:
+            - { name: monolog.logger, channel: vanilla }
+
+    #FileManager Service
+    file.filemanager:
+        class: esuite\MIMBundle\Service\File\FileManager
+        public: true
+        arguments: ["%edot.s3.config%", "@logger", "@edot_notify", "@doctrine.orm.entity_manager", "@edot_s3", "@manager.base"]
+        calls:
+          - [setLogUuidFromRequest,["@request_stack"]]
+
+    #Barco Service
+    barco.user:
+        class: esuite\MIMBundle\Service\Barco\User
+        public: true
+        arguments: ["%barco.config%", "@logger"]
+        tags:
+          - { name: monolog.logger, channel: barco }
+
+    barco.usergroup:
+        class: esuite\MIMBundle\Service\Barco\UserGroups
+        public: true
+        arguments: ["%barco.config%", "@logger"]
+        tags:
+          - { name: monolog.logger, channel: barco }

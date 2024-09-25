@@ -1,0 +1,225 @@
+# esuite\MIMBundle\resources\config\routing_main.yml
+
+login:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\LoginController
+
+logout:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\LogOutController
+
+programmes-util:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ProgrammeUtilityController
+
+programmes:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ProgrammeController
+
+courses:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CourseController
+
+course-backup:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CourseBackupController
+
+course-people:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CoursePeopleController
+
+sessions:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\SessionController
+
+session-handouts:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\SessionHandoutsController
+
+activities:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ActivityController
+
+filedocuments:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\FileDocumentController
+
+linked-documents:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\LinkController
+
+links:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\LinkedDocumentsController
+
+video:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\VideoController
+
+announcements:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\AnnouncementController
+
+box:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\BoxController
+
+tasks:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\TaskController
+
+learning-journey:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\LearningJourneyController
+    
+subtasks:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\SubtaskController
+
+user:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserController
+
+user-announcement:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserAnnouncementController
+
+user-favourite:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserFavouriteController
+
+user-profile:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserProfileController
+
+user-read-document:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserReadDocumentController
+
+user-subtask:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserSubtaskController
+
+diagnostics:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\DiagnosticsController
+
+countries:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CountriesController
+
+groups:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\GroupController
+
+groupsession:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\GroupSessionController
+
+groupactivity:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\GroupActivityController
+
+groupsessionattachment:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\GroupSessionAttachmentController
+
+usertokens:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserTokenController
+
+useragreement:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserAgreementController
+
+extracts:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ExtractController
+
+materials:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CourseMaterialsController
+
+programmeuser:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ProgrammeUserController
+
+programmelogo:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ProgrammeCompanyLogoController
+
+programmelearningjourney:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ProgrammeLearningJourneyController
+
+userchecker:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UserCheckerController
+
+calendar:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CalendarController
+
+profilebook:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\ProfileBookController
+
+session-sheets:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\SessionSheetController
+
+adminsessionlocation:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\AdminSessionLocationController
+
+coordinator:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\CoordinatorController
+
+templatetask:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\TemplateTaskController
+
+templatesubtask:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\TemplateSubtaskController
+
+sso-token:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\SsoValidateController
+
+vanillaforum-util:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\VanillaForumUtilsController
+
+vanillaforum-administration:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\VanillaForumAdministrationController
+
+huddle-user:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\Huddle\HuddleUserController
+
+utility:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\UtilityController
+
+maintenance:
+    type:        annotation
+    resource:    esuite\MIMBundle\Controller\MaintenanceController
+
+barco-user:
+  type:          annotation
+  resource:      esuite\MIMBundle\Controller\BarcoUserController
+
+barco-usergroup:
+  type:          annotation
+  resource:      esuite\MIMBundle\Controller\BarcoUserGroupController
+
+companion:
+  type:          annotation
+  resource:      esuite\MIMBundle\Controller\CompanionController
+
+token:
+    type:          annotation
+    resource:      esuite\MIMBundle\Controller\TokenController

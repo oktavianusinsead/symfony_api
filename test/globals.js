@@ -3,26 +3,26 @@ export default {
   credentials:
   [
     {
-      username: 'zoe.mckay@insead.edutest',
-      password: 'insead2012',
+      username: 'zoe.mckay@esuite.edutest',
+      password: 'esuite2012',
       peoplesoftId: '0802149',
       type: 'coordinator'
     },
     {
-      username: 'omar.abdo@insead.edutest',
-      password: 'Insead.2015',
+      username: 'omar.abdo@esuite.edutest',
+      password: 'esuite.2015',
       peoplesoftId: '0857286',
       type: 'student'
     },
     {
-      username: 'usha.shenoy@insead.edutest',
-      password: 'insead2012',
+      username: 'usha.shenoy@esuite.edutest',
+      password: 'esuite2012',
       peoplesoftId: '0642136',
       type: 'coordinator'
     },
     {
-      username: 'victor.abramov@insead.edutest',
-      password: 'Insead.2015',
+      username: 'victor.abramov@esuite.edutest',
+      password: 'esuite.2015',
       peoplesoftId: '0857576',
       type: 'student'
     }

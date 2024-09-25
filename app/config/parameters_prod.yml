@@ -3,6 +3,6 @@ imports:
 
 parameters:
     symfony_environment: prod
-    database_name: study_api
-    database_user: study_api
-    database_password: study_api
+    database_name: edot_api
+    database_user: edot_api
+    database_password: edot_api

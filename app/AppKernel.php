@@ -29,10 +29,10 @@ class AppKernel extends BaseKernel
 
     public function registerBundles(): iterable
     {
-        $bundles = [new Symfony\Bundle\FrameworkBundle\FrameworkBundle(), new Symfony\Bundle\SecurityBundle\SecurityBundle(), new Symfony\Bundle\TwigBundle\TwigBundle(), new Symfony\Bundle\MonologBundle\MonologBundle(), new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), new Insead\MIMBundle\MIMBundle(), new InseadSSOBundle\InseadSSOBundle(), new FOS\RestBundle\FOSRestBundle(), new JMS\SerializerBundle\JMSSerializerBundle(), new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(), new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), new Insead\MIMSeedFixturesBundle\MIMSeedFixturesBundle(), new Snc\RedisBundle\SncRedisBundle(), new LightSaml\SymfonyBridgeBundle\LightSamlSymfonyBridgeBundle(), new LightSaml\SpBundle\LightSamlSpBundle(), new Nelmio\ApiDocBundle\NelmioApiDocBundle()];
+        $bundles = [new Symfony\Bundle\FrameworkBundle\FrameworkBundle(), new Symfony\Bundle\SecurityBundle\SecurityBundle(), new Symfony\Bundle\TwigBundle\TwigBundle(), new Symfony\Bundle\MonologBundle\MonologBundle(), new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(), new esuite\MIMBundle\MIMBundle(), new esuiteSSOBundle\esuiteSSOBundle(), new FOS\RestBundle\FOSRestBundle(), new JMS\SerializerBundle\JMSSerializerBundle(), new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(), new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(), new esuite\MIMSeedFixturesBundle\MIMSeedFixturesBundle(), new Snc\RedisBundle\SncRedisBundle(), new LightSaml\SymfonyBridgeBundle\LightSamlSymfonyBridgeBundle(), new LightSaml\SpBundle\LightSamlSpBundle(), new Nelmio\ApiDocBundle\NelmioApiDocBundle()];
 
         if (in_array($this->getEnvironment(), ['dev', 'test', 'bb'])) {
-            $devBundles = [new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(), new Insead\MIMLoggingBundle\MIMLoggingBundle()];
+            $devBundles = [new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle(), new esuite\MIMLoggingBundle\MIMLoggingBundle()];
 
             $bundles = array_merge($bundles, $devBundles);
         }
